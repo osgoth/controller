@@ -51,13 +51,3 @@ void skeleton_daemon()
     /* Open the log file */
     //openlog("firstdaemon", LOG_PID, LOG_DAEMON);
 }
-
-void write_f(char *file, char *mode, char *str)
-{
-    FILE *f;
-
-    if ((f = fopen(file, mode)) == NULL)
-        exit(-1);
-
-    fprintf(f, "%s", str);
-}

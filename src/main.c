@@ -3,6 +3,25 @@
 #include <string.h>
 #include <signal.h>
 
+void send_notification(int procent)
+{
+    FILE *pidf;
+    FILE *buf;
+    int pid;
+
+    if ((pidf = fopen("/tmp/ctrl.pid", "rb")) == NULL)
+        exit(-1);
+    fscanf(pidf, "%d", &pid);
+    fclose(pidf);
+
+    if ((buf = fopen("/tmp/ctrl.proc", "wb")) == NULL)
+        exit(-1);
+    fprintf(buf, "%d", procent);
+    fclose(buf);
+
+    kill(pid, SIGUSR1);
+}
+
 // bl au -10
 // bl br 20
 int main(int argc, char *argv[])
@@ -64,23 +83,4 @@ int main(int argc, char *argv[])
     }
 
     return 0;
-}
-
-void send_notification(int procent)
-{
-    FILE *pidf;
-    FILE *buf;
-    int pid;
-
-    if ((pidf = fopen("/tmp/ctrl.pid", "rb")) == NULL)
-        exit(-1);
-    fscanf(pidf, "%d", &pid);
-    fclose(pidf);
-
-    if ((buf = fopen("/tmp/ctrl.proc", "wb")) == NULL)
-        exit(-1);
-    fprintf(buf, "%d", procent);
-    fclose(buf);
-
-    kill(pid, SIGUSR1);
 }

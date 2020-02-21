@@ -1,5 +1,3 @@
-// gcc src/background.c src/daemonize.c -o bin/background `pkg-config --cflags --libs glib-2.0 gdk-pixbuf-2.0` -lnotify && ./bin/background
-
 #include <libnotify/notify.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -41,6 +39,7 @@ int main(int argc, char *argv[])
     fclose(buf);
 
     shmem = notify_notification_new("", NULL, NULL);
+    notify_notification_set_timeout(shmem, 5000);
 
     //signal(SIGINT, notify);
     signal(SIGUSR1, notify);
