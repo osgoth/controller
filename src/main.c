@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
         int add = atoi(argv[2]);
         int curr = 0;
         int max = 0;
+        int min = 0;
         int brightness = 0;
         int proc = 0;
         int newproc = 0;
@@ -56,13 +57,17 @@ int main(int argc, char *argv[])
             return 1;
 
         fscanf(f, "%d", &brightness);
+        fclose(f);
 
         proc = brightness / coef;
 
         add *= coef;
 
         newbr = brightness + add;
-
+        if (newbr > max)
+            newbr = max;
+        if (newbr <= 0)
+            newbr = coef;
         newproc = newbr / coef;
 
         if ((f = fopen("/sys/class/backlight/intel_backlight/brightness", "w")) == NULL)
