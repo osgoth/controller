@@ -22,8 +22,9 @@ void send_notification(int procent)
     kill(pid, SIGUSR1);
 }
 
-// bl au -10
-// bl br 20
+// ctrl au -10
+// ctrl br 20
+// ctrl lang tog
 int main(int argc, char *argv[])
 {
 
@@ -85,6 +86,10 @@ int main(int argc, char *argv[])
         printf("new procent: %d\n", newproc);
 
         send_notification(newproc);
+    }
+    else if (strcmp(argv[1], "lang") == 0 && strcmp(argv[2], "tog") == 0)
+    {
+        send_notification("");
     }
 
     return 0;
